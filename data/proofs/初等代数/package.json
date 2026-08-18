@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../concepts/package.schema.json",
+  "version": 1,
+  "id": "proof-course.elementary.algebra",
+  "title": "初等代数：证明库",
+  "description": "每个证明都是独立节点；同一公式的不同证明分别记录方法与依赖。",
+  "contentKind": "proof",
+  "nodes": [
+    { "id": "proof.elementary.algebra.quadratic-formula.completing-square", "file": "求根公式-配方法.md" },
+    { "id": "proof.elementary.algebra.discriminant.root-count", "file": "判别式-根数分析.md" },
+    { "id": "proof.elementary.algebra.vieta.factorization", "file": "韦达定理-因式分解法.md" },
+    { "id": "proof.elementary.algebra.vieta.substitution", "file": "韦达定理-代入法.md" },
+    { "id": "proof.elementary.algebra.inequality-flip.multiplication", "file": "不等式乘法翻转-有序域.md" },
+    { "id": "proof.elementary.algebra.change-of-base.logarithm", "file": "对数换底公式-定义代入.md" }
+  ]
+}

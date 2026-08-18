@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../concepts/package.schema.json",
+  "version": 1,
+  "id": "exercise-course.tooling",
+  "title": "工具课：练习库",
+  "description": "配套 data/others 三套入门课程的练习节点：Python 数值研究、Lean 形式化证明、LaTeX 公式输入。",
+  "contentKind": "exercise",
+  "nodes": [
+    { "id": "exercise.tooling.python.float-precision", "file": "python-浮点精度.md" },
+    { "id": "exercise.tooling.python.integral-quad", "file": "python-反常积分.md" },
+    { "id": "exercise.tooling.python.fit-overfit", "file": "python-拟合过拟合.md" },
+    { "id": "exercise.tooling.lean.proposition-logic", "file": "lean-命题逻辑.md" },
+    { "id": "exercise.tooling.lean.induction", "file": "lean-归纳证明.md" },
+    { "id": "exercise.tooling.lean.number-theory", "file": "lean-整除与gcd.md" },
+    { "id": "exercise.tooling.latex.transcribe-formula", "file": "latex-公式双写.md" },
+    { "id": "exercise.tooling.latex.disambiguate", "file": "latex-消除歧义.md" },
+    { "id": "exercise.tooling.latex.photo-description", "file": "latex-拍照描述.md" }
+  ]
+}

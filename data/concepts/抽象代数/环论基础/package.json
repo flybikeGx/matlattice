@@ -1,0 +1,21 @@
+{
+  "$schema": "../../package.schema.json",
+  "version": 1,
+  "id": "course.university.algebra.rings",
+  "title": "大学数学：环论基础",
+  "description": "从环、理想和同态进入商环与分解。",
+  "nodes": [
+    { "id": "concept.ring", "file": "环.md" },
+    { "id": "concept.unit", "file": "单位元.md" },
+    { "id": "concept.integral-domain", "file": "整环.md" },
+    { "id": "concept.field", "file": "域.md" },
+    { "id": "concept.ideal", "file": "理想.md" },
+    { "id": "concept.principal-ideal", "file": "主理想.md" },
+    { "id": "concept.quotient-ring", "file": "商环.md" },
+    { "id": "concept.ring-homomorphism", "file": "环同态.md" },
+    { "id": "concept.kernel-ring-hom", "file": "环同态的核.md" },
+    { "id": "theorem.first-isomorphism-rings", "file": "第一同构定理.md" },
+    { "id": "concept.irreducible-element", "file": "不可约元.md" },
+    { "id": "concept.ufd", "file": "唯一分解整环.md" }
+  ]
+}

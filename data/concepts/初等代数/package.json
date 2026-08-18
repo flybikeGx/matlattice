@@ -1,0 +1,24 @@
+{
+  "$schema": "../../package.schema.json",
+  "version": 1,
+  "id": "course.elementary.algebra",
+  "title": "初等数学：代数",
+  "description": "用数、式、方程与函数建立代数表达与求解能力。",
+  "nodes": [
+    { "id": "elementary.algebra.expressions", "file": "数与式.md" },
+    { "id": "elementary.algebra.linear-equation", "file": "一元一次方程.md" },
+    { "id": "elementary.algebra.factorization", "file": "因式分解.md" },
+    { "id": "elementary.algebra.quadratic-equation", "file": "一元二次方程.md" },
+    { "id": "elementary.algebra.vieta-theorem", "file": "韦达定理.md" },
+    { "id": "elementary.algebra.system-of-two-linear-equations", "file": "二元一次方程组.md" },
+    { "id": "elementary.algebra.inequality", "file": "不等式.md" },
+    { "id": "elementary.algebra.exponent", "file": "指数运算.md" },
+    { "id": "elementary.algebra.radical", "file": "根式.md" },
+    { "id": "elementary.algebra.logarithm", "file": "对数运算.md" },
+    { "id": "elementary.algebra.function-basics", "file": "函数初步.md" },
+    { "id": "elementary.algebra.linear-function", "file": "一次函数.md" },
+    { "id": "elementary.algebra.quadratic-function", "file": "二次函数.md" },
+    { "id": "elementary.algebra.exponential-function", "file": "指数函数.md" },
+    { "id": "elementary.algebra.logarithmic-function", "file": "对数函数.md" }
+  ]
+}

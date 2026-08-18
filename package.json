@@ -1,0 +1,11 @@
+{
+  "name": "matlattice",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node src/check.mjs",
+    "progress": "node src/progress.mjs",
+    "next": "node src/path.mjs",
+    "render": "node src/render.mjs"
+  }
+}

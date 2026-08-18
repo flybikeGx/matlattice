@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../concepts/package.schema.json",
+  "version": 1,
+  "id": "proof-course.elementary.geometry",
+  "title": "初等几何：证明库",
+  "description": "每个证明都是独立节点；同一命题的不同证法分别记录方法与依赖。",
+  "contentKind": "proof",
+  "nodes": [
+    { "id": "proof.elementary.geometry.triangle-angle-sum.parallel-line", "file": "三角形内角和-平行线法.md" },
+    { "id": "proof.elementary.geometry.triangle-angle-sum.tearing", "file": "三角形内角和-撕裂法.md" },
+    { "id": "proof.elementary.geometry.pythagorean.similarity", "file": "勾股定理-相似三角形法.md" },
+    { "id": "proof.elementary.geometry.pythagorean.area-puzzle", "file": "勾股定理-面积拼图法.md" },
+    { "id": "proof.elementary.geometry.polygon-angle-sum.triangulation", "file": "多边形内角和-三角剖分.md" },
+    { "id": "proof.elementary.geometry.polygon-exterior-angle.walk-around", "file": "多边形外角和-旋转法.md" },
+    { "id": "proof.elementary.geometry.law-of-sines.altitude", "file": "正弦定理-作高法.md" },
+    { "id": "proof.elementary.geometry.law-of-cosines.coordinates", "file": "余弦定理-坐标法.md" },
+    { "id": "proof.elementary.geometry.midsegment.similarity", "file": "中位线定理-相似法.md" },
+    { "id": "proof.elementary.geometry.projection.similarity", "file": "射影定理-相似法.md" },
+    { "id": "proof.elementary.geometry.circle-circumference.inscribed-polygon", "file": "圆周长公式-极限近似法.md" }
+  ]
+}

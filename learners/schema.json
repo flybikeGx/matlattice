@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "learner.schema.json",
+  "title": "Math learner save",
+  "type": "object",
+  "required": ["version", "id", "createdAt", "updatedAt", "progress", "visits"],
+  "properties": {
+    "version": { "const": 1 },
+    "id": { "type": "string", "pattern": "^[a-zA-Z0-9_-]+$" },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "progress": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["status", "mastery", "updatedAt"],
+        "properties": {
+          "status": {
+            "enum": ["not_started", "learning", "completed"]
+          },
+          "mastery": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "completedAt": {
+            "type": ["string", "null"],
+            "format": "date-time"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["at", "kind", "note"],
+              "properties": {
+                "at": { "type": "string", "format": "date-time" },
+                "kind": {
+                  "enum": ["explanation", "exercise", "proof", "transfer", "teacher_observation"]
+                },
+                "note": { "type": "string", "minLength": 1 }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "visits": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["count", "lastAt"],
+        "properties": {
+          "count": { "type": "integer", "minimum": 1 },
+          "lastAt": { "type": "string", "format": "date-time" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "../../package.schema.json",
+  "version": 1,
+  "id": "course.university.algebra.groups",
+  "title": "大学数学：群论基础",
+  "description": "从群与子群进入正规子群和商群。",
+  "nodes": [
+    { "id": "concept.group", "file": "群.md" },
+    { "id": "concept.additive-subgroup", "file": "加法子群.md" },
+    { "id": "concept.normal-subgroup", "file": "正规子群.md" },
+    { "id": "concept.coset", "file": "陪集.md" },
+    { "id": "concept.quotient-group", "file": "商群.md" }
+  ]
+}

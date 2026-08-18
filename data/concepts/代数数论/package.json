@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../package.schema.json",
+  "version": 1,
+  "id": "course.university.algebra.algebraic-number-theory",
+  "title": "大学数学：代数数论",
+  "description": "以数域、整数环和理想分解为主线的课程草案。",
+  "nodes": [
+    { "id": "concept.number-field", "file": "数域.md" },
+    { "id": "concept.ring-of-integers", "file": "整数环.md" },
+    { "id": "concept.quadratic-ring-of-integers", "file": "二次整数环.md" },
+    { "id": "concept.number-field-norm", "file": "范数.md" },
+    { "id": "phenomenon.zsqrtminus5-non-ufd", "file": "Z√-5中的唯一分解失败.md" },
+    { "id": "concept.dedekind-domain", "file": "Dedekind整环.md" },
+    { "id": "concept.fractional-ideal", "file": "分式理想.md" },
+    { "id": "concept.ideal-class-group", "file": "理想类群.md" }
+  ]
+}

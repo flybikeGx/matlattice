@@ -1,0 +1,25 @@
+{
+  "$schema": "../../package.schema.json",
+  "version": 1,
+  "id": "course.elementary.geometry",
+  "title": "初等数学：几何",
+  "description": "从图形关系与证明开始组织欧氏几何，延伸至三角函数与解析几何初步。",
+  "nodes": [
+    { "id": "elementary.geometry.basic-figures-and-angles", "file": "基本图形与角.md" },
+    { "id": "elementary.geometry.parallel-lines", "file": "平行线.md" },
+    { "id": "elementary.geometry.triangle-angle-sum", "file": "三角形内角和.md" },
+    { "id": "elementary.geometry.triangle-classification", "file": "三角形分类与性质.md" },
+    { "id": "elementary.geometry.triangle-congruence", "file": "三角形全等.md" },
+    { "id": "elementary.geometry.triangle-similarity", "file": "三角形相似.md" },
+    { "id": "elementary.geometry.pythagorean-theorem", "file": "勾股定理.md" },
+    { "id": "elementary.geometry.midsegment-theorem", "file": "三角形中位线定理.md" },
+    { "id": "elementary.geometry.projection-theorem", "file": "射影定理.md" },
+    { "id": "elementary.geometry.trigonometry", "file": "锐角三角函数.md" },
+    { "id": "elementary.geometry.law-of-sines", "file": "正弦定理.md" },
+    { "id": "elementary.geometry.law-of-cosines", "file": "余弦定理.md" },
+    { "id": "elementary.geometry.polygons", "file": "多边形.md" },
+    { "id": "elementary.geometry.circle", "file": "圆.md" },
+    { "id": "elementary.geometry.cartesian-coordinates", "file": "直角坐标系.md" },
+    { "id": "elementary.geometry.conic-sections", "file": "圆锥曲线初步.md" }
+  ]
+}

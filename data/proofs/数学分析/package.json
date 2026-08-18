@@ -1,0 +1,22 @@
+{
+  "$schema": "../../../concepts/package.schema.json",
+  "version": 1,
+  "id": "proof-course.university.analysis",
+  "title": "数学分析：证明库",
+  "description": "每个证明都是独立节点；同一命题的不同证法分别记录方法与依赖。",
+  "contentKind": "proof",
+  "nodes": [
+    { "id": "proof.analysis.monotone-convergence", "file": "01-实数与数列极限/单调有界定理-上确界.md" },
+    { "id": "proof.analysis.squeeze-sequence", "file": "01-实数与数列极限/夹逼定理-数列版.md" },
+    { "id": "proof.analysis.cauchy-completeness", "file": "01-实数与数列极限/柯西准则-完备性等价.md" },
+    { "id": "proof.analysis.important-limit-sinx-over-x", "file": "02-函数与极限/重要极限-sinx除以x.md" },
+    { "id": "proof.analysis.ivt-bisection", "file": "03-连续函数/介值定理-二分法.md" },
+    { "id": "proof.analysis.derivable-implies-continuous", "file": "04-微分学/可导必连续.md" },
+    { "id": "proof.analysis.chain-rule", "file": "04-微分学/链式法则.md" },
+    { "id": "proof.analysis.rolle-theorem", "file": "04-微分学/罗尔定理-最值法.md" },
+    { "id": "proof.analysis.lagrange-mvt", "file": "04-微分学/拉格朗日中值定理-辅助函数.md" },
+    { "id": "proof.analysis.cauchy-mvt", "file": "04-微分学/柯西中值定理.md" },
+    { "id": "proof.analysis.ftc-part1", "file": "05-积分学/微积分基本定理-第一形式.md" },
+    { "id": "proof.analysis.ftc-part2", "file": "05-积分学/微积分基本定理-第二形式.md" }
+  ]
+}

@@ -1,0 +1,4 @@
+learners/*.json
+!learners/schema.json
+generated/
+.obsidian
