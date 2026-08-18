@@ -26,6 +26,98 @@ function readJson(file) {
   }
 }
 
+const PROFILE_ENUMS = {
+  "status": ["in_progress", "completed"],
+  "background.proofExperience": ["new", "some", "comfortable"],
+  "preferences.participation": ["listen", "guided", "active"],
+  "preferences.lessonSize": ["small", "medium", "large"],
+  "preferences.checkIns": ["brief", "reflective", "practice"],
+  "preferences.exposition": ["intuition_first", "balanced", "formal_first"],
+  "preferences.correction": ["gentle", "direct"],
+  "rendering.inlineMath": ["dollar", "paren", "plain", "unknown"],
+  "rendering.displayMath": ["double_dollar", "bracket", "plain", "unknown"],
+  "assessment.basis": ["self_report", "conversation", "diagnostic"]
+};
+
+const PROFILE_KEYS = {
+  root: ["status", "updatedAt", "goal", "background", "preferences", "rendering", "assessment", "sampleFeedback"],
+  background: ["stage", "summary", "proofExperience"],
+  preferences: ["participation", "lessonSize", "checkIns", "exposition", "correction"],
+  rendering: ["inlineMath", "displayMath"],
+  assessment: ["summary", "basis"]
+};
+
+function isObject(value) {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+
+function valueAt(value, dottedPath) {
+  return dottedPath.split(".").reduce((current, key) => current?.[key], value);
+}
+
+function validateLearnerProfile(profile, file) {
+  if (profile === undefined) return;
+  if (!isObject(profile)) {
+    error(file + ": profile must be an object");
+    return;
+  }
+
+  const checkKeys = (value, allowed, label) => {
+    if (value === undefined) return;
+    if (!isObject(value)) {
+      error(file + ": " + label + " must be an object");
+      return;
+    }
+    for (const key of Object.keys(value)) {
+      if (!allowed.includes(key)) error(file + ": unknown " + label + " field " + key);
+    }
+  };
+  checkKeys(profile, PROFILE_KEYS.root, "profile");
+  checkKeys(profile.background, PROFILE_KEYS.background, "profile.background");
+  checkKeys(profile.preferences, PROFILE_KEYS.preferences, "profile.preferences");
+  checkKeys(profile.rendering, PROFILE_KEYS.rendering, "profile.rendering");
+  checkKeys(profile.assessment, PROFILE_KEYS.assessment, "profile.assessment");
+
+  for (const field of ["updatedAt", "goal", "background.stage", "background.summary", "assessment.summary", "sampleFeedback"]) {
+    const value = valueAt(profile, field);
+    if (value !== undefined && (typeof value !== "string" || value.trim() === "")) {
+      error(file + ": profile field " + field + " must be non-empty text");
+    }
+  }
+  for (const [field, allowed] of Object.entries(PROFILE_ENUMS)) {
+    const value = valueAt(profile, field);
+    if (value !== undefined && !allowed.includes(value)) {
+      error(file + ": invalid profile field " + field + ": " + value);
+    }
+  }
+  if (!profile.status) error(file + ": profile is missing status");
+  if (!profile.updatedAt) error(file + ": profile is missing updatedAt");
+
+  if (profile.status === "completed") {
+    const required = [
+      "goal",
+      "background.stage",
+      "background.summary",
+      "background.proofExperience",
+      "preferences.participation",
+      "preferences.lessonSize",
+      "preferences.checkIns",
+      "preferences.exposition",
+      "preferences.correction",
+      "rendering.inlineMath",
+      "rendering.displayMath",
+      "assessment.summary",
+      "assessment.basis",
+      "sampleFeedback"
+    ];
+    for (const field of required) {
+      if (valueAt(profile, field) === undefined) {
+        error(file + ": completed profile is missing " + field);
+      }
+    }
+  }
+}
+
 let catalog;
 try {
   catalog = loadKnowledgeCatalog();
@@ -187,6 +279,7 @@ for (const file of walkFiles(path.join(PROJECT_ROOT, "data", "courses"), (item) 
 for (const file of walkFiles(path.join(PROJECT_ROOT, "learners"), (item) => item.endsWith(".json") && !item.endsWith("schema.json"))) {
   const learner = readJson(file);
   if (!learner) continue;
+  validateLearnerProfile(learner.profile, file);
   for (const id of Object.keys(learner.progress || {})) {
     if (!catalog.has(id)) error(file + ": unknown progress item " + id);
   }
@@ -204,5 +297,5 @@ const counts = Object.fromEntries(CONTENT_KINDS.map((kind) => [kind, 0]));
 for (const item of catalog.values()) counts[item.kind] += 1;
 console.log(
   `OK: ${counts.concept} concepts, ${counts.proof} proofs, ${counts.exercise} exercises; ` +
-  "package outlines, course outlines, learner saves, LaTeX, and require tags"
+  "package outlines, course outlines, learner profiles and progress, LaTeX, and require tags"
 );

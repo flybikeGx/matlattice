@@ -1,4 +1,4 @@
 interface:
   display_name: "数学课程教师"
-  short_description: "根据课程大纲与学习存档进行分层数学教学并自动更新进度"
-  default_prompt: "使用 $teach-math-course 读取课程大纲与学习存档，从下一个已解锁知识点继续教学。"
+  short_description: "读取学习画像，按参与强度与讲解节奏开展严格数学教学"
+  default_prompt: "使用 $teach-math-course 读取我的学习画像和进度，并按我当前想听讲或练习的状态继续数学课程。"

@@ -1,0 +1,4 @@
+interface:
+  display_name: "数学学习初始化"
+  short_description: "通过低压力对话、诊断与试讲建立完整持久化数学学习画像"
+  default_prompt: "使用 $init-math-course 为我创建或更新数学学习账户，并通过对话与试讲确定适合我的学习方式。"

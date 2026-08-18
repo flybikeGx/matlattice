@@ -33,9 +33,11 @@ cd matlattice
 ```bash
 mkdir -p ~/.agents/skills
 cp -r skills/teach-math-course ~/.agents/skills/
+cp -r skills/init-math-course ~/.agents/skills/
 cp -r skills/math-input ~/.agents/skills/
 ```
 
+- `init-math-course`：初始化教师——创建账户，通过低压力对话、定位和试讲保存学习画像；
 - `teach-math-course`：主教师——读课程大纲、选下一节点、教学、评估、记录进度；
 - `math-input`：公式输入助手——理解聊天里的简化公式写法（如 `mat((1 2) (3 4))`）、手写公式照片，教你怎么打公式。
 
@@ -43,9 +45,20 @@ cp -r skills/math-input ~/.agents/skills/
 
 ### 第 3 步：在项目目录中启动 agent
 
-在 `matlattice` 目录中打开支持 agent skills 的编辑器（如 Zed），新建会话并调用 `teach-math-course` skill。
+在 `matlattice` 目录中打开支持 agent skills 的编辑器（如 Zed），新建会话。
 
-### 第 4 步：让 AI 开始教学
+### 第 4 步：初始化学习画像
+
+第一次使用时调用 `init-math-course`，例如：
+
+- "使用 init-math-course，为我创建账户，我叫 Terry"
+- "先帮我判断数学基础，并试讲一小段看看什么节奏适合我"
+
+初始化不会把你塞进一场考试。AI 会通过几轮简短对话了解数学背景、证明经验和学习目标；确认你通常想只听讲、边学边问还是主动做题；测试公式渲染；再试讲一小段让你评价。默认偏好和定位摘要会写入学习者存档，正式教学时不必尴尬地中途重新协商。
+
+“今天只想听”属于单次会话设置，不会覆盖长期偏好。只听模式仍会在自然的段落边界询问是否理解、是否继续或换一种说法，但不会把计算题伪装成理解检查。
+
+### 第 5 步：让 AI 开始教学
 
 直接告诉它你想学什么，例如：
 
@@ -55,9 +68,9 @@ cp -r skills/math-input ~/.agents/skills/
 
 AI 教师会自动：
 
-1. 读取课程大纲（`data/courses/*.md`）与你的学习存档；
+1. 读取课程大纲（`data/courses/*.md`）、学习画像与学习进度；
 2. 选择下一个已解锁的知识节点（概念、证明或练习）；
-3. 只展示你已经满足前置要求的内容，教学、提问并评估；
+3. 按初始化时确定的参与强度、讲解颗粒度和停顿方式教学；
 4. 通过脚本记录访问与有证据的进度——你随时可以继续上次的进度。
 
 课程未列出的前置节点会被自动补全（以 `know` 等级先行学习），不需要手动安排顺序。想学其他主题时，直接告诉 AI 即可。
@@ -69,14 +82,14 @@ AI 教师会自动：
 ## 工作方式
 
 ```text
-课程大纲 + 学习者存档
-          ↓
+课程大纲 + 学习画像 + 学习进度
+              ↓
   选择下一个可学习节点
-          ↓
+              ↓
 过滤尚未满足 require 的内容
-          ↓
+              ↓
   AI 教学、提问与评估
-          ↓
+              ↓
      脚本更新存档
 ```
 
@@ -92,7 +105,7 @@ data/
   courses/     课程大纲（md + frontmatter 结构化数据）：组合/分解各知识包，设计节点等级
   others/      工具课等单文件课程（Python 数值研究、Lean 入门、LaTeX 公式输入）
 learners/      学习者 JSON 存档和 schema
-src/           校验、渲染、课程选择和进度管理脚本
+src/           校验、渲染、课程选择、画像和进度管理脚本
 skills/        面向 AI 教师的最终交付入口
 docs/          项目设计与知识模型说明
 ```
@@ -123,6 +136,16 @@ node src/progress.mjs init --learner alice
 ```
 
 这会创建 `learners/alice.json`。不要手工编辑该文件，后续访问和进度都应通过脚本写入。
+
+### 保存学习画像
+
+正常情况下由 `init-math-course` 调用画像脚本。可以查看当前画像：
+
+```bash
+node src/profile.mjs show --learner alice
+```
+
+`src/profile.mjs set` 可保存目标与背景、证明经验、默认参与强度、讲解颗粒度、停顿方式、形式化顺序、纠错方式、公式渲染和试讲反馈。画像可以处于 `in_progress` 或 `completed`；现有旧存档没有画像时仍保持兼容。
 
 ### 选择下一项学习内容
 

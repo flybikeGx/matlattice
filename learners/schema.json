@@ -9,6 +9,53 @@
     "id": { "type": "string", "pattern": "^[a-zA-Z0-9_-]+$" },
     "createdAt": { "type": "string", "format": "date-time" },
     "updatedAt": { "type": "string", "format": "date-time" },
+    "profile": {
+      "type": "object",
+      "required": ["status", "updatedAt"],
+      "properties": {
+        "status": { "enum": ["in_progress", "completed"] },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "goal": { "type": "string", "minLength": 1 },
+        "background": {
+          "type": "object",
+          "properties": {
+            "stage": { "type": "string", "minLength": 1 },
+            "summary": { "type": "string", "minLength": 1 },
+            "proofExperience": { "enum": ["new", "some", "comfortable"] }
+          },
+          "additionalProperties": false
+        },
+        "preferences": {
+          "type": "object",
+          "properties": {
+            "participation": { "enum": ["listen", "guided", "active"] },
+            "lessonSize": { "enum": ["small", "medium", "large"] },
+            "checkIns": { "enum": ["brief", "reflective", "practice"] },
+            "exposition": { "enum": ["intuition_first", "balanced", "formal_first"] },
+            "correction": { "enum": ["gentle", "direct"] }
+          },
+          "additionalProperties": false
+        },
+        "rendering": {
+          "type": "object",
+          "properties": {
+            "inlineMath": { "enum": ["dollar", "paren", "plain", "unknown"] },
+            "displayMath": { "enum": ["double_dollar", "bracket", "plain", "unknown"] }
+          },
+          "additionalProperties": false
+        },
+        "assessment": {
+          "type": "object",
+          "properties": {
+            "summary": { "type": "string", "minLength": 1 },
+            "basis": { "enum": ["self_report", "conversation", "diagnostic"] }
+          },
+          "additionalProperties": false
+        },
+        "sampleFeedback": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
     "progress": {
       "type": "object",
       "additionalProperties": {
