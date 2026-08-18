@@ -14,21 +14,80 @@ MatLattice 是一个由结构化课程大纲驱动的 AI 数学教师项目。
 
 这份 README 同时面向两类读者：
 
-- 学习者和课程使用者：创建存档、选择学习路径并开始课程；
+- 学习者和课程使用者：克隆仓库、启动 AI 教师并开始学习；
 - 知识贡献者：增加或修改课程节点、证明、练习和依赖关系。
+
+## 快速开始（学习者）
+
+### 第 1 步：克隆项目
+
+```bash
+git clone <仓库地址> matlattice
+cd matlattice
+```
+
+### 第 2 步：安装 AI 教师 skill
+
+把项目自带的 AI 教师安装到编辑器可识别的全局 skill 目录：
+
+```bash
+mkdir -p ~/.agents/skills
+cp -r skills/teach-math-course ~/.agents/skills/
+cp -r skills/math-input ~/.agents/skills/
+```
+
+- `teach-math-course`：主教师——读课程大纲、选下一节点、教学、评估、记录进度；
+- `math-input`：公式输入助手——理解聊天里的简化公式写法（如 `mat((1 2) (3 4))`）、手写公式照片，教你怎么打公式。
+
+> 后续更新仓库后，重新执行复制即可覆盖为最新版本。
+
+### 第 3 步：在项目目录中启动 agent
+
+在 `matlattice` 目录中打开支持 agent skills 的编辑器（如 Zed），新建会话并调用 `teach-math-course` skill。
+
+### 第 4 步：让 AI 开始教学
+
+直接告诉它你想学什么，例如：
+
+- "使用 teach-math-course，我想学初等数论"
+- "我想学微积分"（对应 `data/courses/微积分.md`）
+- "讲一讲欧几里得算法"
+
+AI 教师会自动：
+
+1. 读取课程大纲（`data/courses/*.md`）与你的学习存档；
+2. 选择下一个已解锁的知识节点（概念、证明或练习）；
+3. 只展示你已经满足前置要求的内容，教学、提问并评估；
+4. 通过脚本记录访问与有证据的进度——你随时可以继续上次的进度。
+
+### 可用的课程
+
+| 课程 | 大纲文件 | 内容 |
+|---|---|---|
+| 初等数论 | `data/courses/初等数论.md` | 整除、素数、gcd、不定方程、同余、剩余系、算术函数、模指数定理 |
+| 欧几里得算法 | `data/courses/欧几里得算法.md` | 从整除到 gcd 的短课 |
+| 微积分 | `data/courses/微积分.md` | 极限与连续基础 + 一元微分学与积分学 |
+| 数学分析 | `data/courses/数学分析.md` | 微积分的严格基础：实数、极限、连续、微分、积分、级数 |
+| 高等数学 | `data/courses/高等数学.md` | 工科主线：极限连续、微分积分、无穷级数 |
+
+课程未列出的前置节点会被自动补全（以 `know` 等级先行学习），不需要手动安排顺序。想学其他主题时，直接告诉 AI 即可。
+
+### 公式怎么输入
+
+聊天框不支持公式编辑器。简单写法：上标 `a^2`、下标 `x_i`、分数 `a/b`、根号 `sqrt(2)`、矩阵 `mat((1 2) (3 4))`、求和 `sum_(i=1)^n a_i`。复杂公式可以写在纸上拍照发给 AI，或直接用中文描述。完整约定见 `data/others/latex-数学公式.md`，遇到问题也可以直接问 AI（`math-input` skill 会帮你）。
 
 ## 工作方式
 
 ```text
-课程大纲 + 学习路径 + 学习者存档
-                  ↓
-          选择下一个可学习节点
-                  ↓
-       过滤尚未满足 require 的内容
-                  ↓
-          AI 教学、提问与评估
-                  ↓
-             脚本更新存档
+课程大纲 + 学习者存档
+          ↓
+  选择下一个可学习节点
+          ↓
+过滤尚未满足 require 的内容
+          ↓
+  AI 教学、提问与评估
+          ↓
+     脚本更新存档
 ```
 
 概念、证明和练习是三个独立的学习节点。理解一个定理，不等于已经掌握它的某种证明；完成一道练习，也不会自动把相关概念标记为完成。
@@ -57,7 +116,9 @@ skills/     data 外的 AI 教师
 learners/   可写的用户状态
 ```
 
-## 学习者快速开始
+## 运行时脚本（开发者参考）
+
+正常情况下由 AI 教师调用这些脚本，不需要手动执行。需要调试或直接操作时可参考。
 
 项目脚本使用 Node.js，无第三方运行时依赖。在项目根目录先检查数据是否一致：
 
@@ -65,7 +126,7 @@ learners/   可写的用户状态
 npm run check
 ```
 
-### 1. 创建学习者存档
+### 创建学习者存档
 
 ```bash
 node src/progress.mjs init --learner alice
@@ -73,11 +134,9 @@ node src/progress.mjs init --learner alice
 
 这会创建 `learners/alice.json`。不要手工编辑该文件，后续访问和进度都应通过脚本写入。
 
-### 2. 选择下一项学习内容
+### 选择下一项学习内容
 
-选择一个课程大纲（`data/courses/*.md`）。
-
-使用初等数论主线：
+选择一个课程大纲（`data/courses/*.md`）：
 
 ```bash
 node src/path.mjs next \
@@ -94,7 +153,7 @@ node src/path.mjs next --learner alice --course data/courses/微积分.md
 
 返回结果包含节点 ID、类型、标题和实际文件路径。节点类型可能是 `concept`、`proof` 或 `exercise`。课程大纲未列出的前置节点（`requires` 链）会被自动补全为 `auto` 项，并以 `know` 等级先行学习。
 
-### 3. 渲染当前可见内容
+### 渲染当前可见内容
 
 ```bash
 node src/render.mjs \
@@ -109,7 +168,7 @@ node src/render.mjs \
 
 直接打开源 Markdown 可以用于编辑，但不能代表学习者此刻应该看到的内容。正式教学前应始终先运行渲染器。
 
-### 4. 记录访问与学习进度
+### 记录访问与学习进度
 
 记录一次访问：
 
@@ -138,18 +197,6 @@ node src/progress.mjs set \
 ```bash
 node src/progress.mjs show --learner alice
 ```
-
-## 使用 AI 教师
-
-教师入口位于 [`skills/teach-math-course/SKILL.md`](skills/teach-math-course/SKILL.md)。AI 教师应遵循以下顺序：
-
-1. 读取指定课程或学习路径与学习者存档；
-2. 选择下一项已解锁节点；
-3. 通过 `src/render.mjs` 获取当前可见内容；
-4. 根据节点类型进行概念教学、证明引导或练习评估；
-5. 通过脚本记录访问和有证据支持的进度。
-
-课程文件是教学大纲和约束，不是要求 AI 逐字朗读的讲稿。AI 应先让学生尝试，再逐步给提示，并根据解释、证明、练习或迁移表现记录证据。
 
 ## 知识贡献指南
 
@@ -191,7 +238,7 @@ requires: ["elementary.number-theory.prerequisite"]
 正文……
 ```
 
-`id` 必须在整个项目中唯一，并且一旦被学习路径或用户存档引用，就应保持稳定。`requires` 是打开整篇文档所需的最低标准。
+`id` 必须在整个项目中唯一，并且一旦被课程大纲或用户存档引用，就应保持稳定。`requires` 是打开整篇文档所需的最低标准。
 
 ### 4. 编写证明节点
 
@@ -237,7 +284,7 @@ requires: ["elementary.number-theory.example"]
 描述完成本题时应观察到的推理或能力，不直接给出完整答案。
 ```
 
-`difficulty` 必须是 `1–5` 的整数。`tests` 声明练习评估哪些节点；它和“打开练习需要什么”的 `requires` 含义不同。
+`difficulty` 必须是 `1–5` 的整数。`tests` 声明练习评估哪些节点；它和"打开练习需要什么"的 `requires` 含义不同。
 
 当前 frontmatter 解析器要求数组写成单行 JSON 数组，例如 `requires: ["a", "b"]`，不要使用多行 YAML 列表。
 
